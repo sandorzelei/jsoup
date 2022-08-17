@@ -1,5 +1,7 @@
 package org.jsoup.parser;
 
+import static org.jsoup.parser.HtmlTreeBuilder.DEFAULT_REMOVE_FIRST_NEW_LINE;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -157,11 +159,7 @@ public class Parser {
      * @return parsed Document
      */
     public static Document parse(String html, String baseUri) {
-        return parse(html, baseUri, true);
-    }
-
-    public static Document parse(String html, String baseUri, boolean removeFirstNewLine) {
-        TreeBuilder treeBuilder = new HtmlTreeBuilder(removeFirstNewLine);
+        TreeBuilder treeBuilder = new HtmlTreeBuilder();
         return treeBuilder.parse(new StringReader(html), baseUri, new Parser(treeBuilder));
     }
 
@@ -251,7 +249,11 @@ public class Parser {
      * @return a new HTML parser.
      */
     public static Parser htmlParser() {
-        return new Parser(new HtmlTreeBuilder());
+        return htmlParser(DEFAULT_REMOVE_FIRST_NEW_LINE);
+    }
+
+    public static Parser htmlParser(boolean removeFirstNewLine) {
+        return new Parser(new HtmlTreeBuilder(removeFirstNewLine));
     }
 
     /**

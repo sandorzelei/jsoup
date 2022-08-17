@@ -60,6 +60,7 @@ public class HtmlTreeBuilder extends TreeBuilder {
     private boolean fosterInserts; // if next inserts should be fostered
     private boolean fragmentParsing; // if parsing a fragment of html
 
+    public static final boolean DEFAULT_REMOVE_FIRST_NEW_LINE = true;
     private boolean removeFirstNewLine;
 
     public HtmlTreeBuilder() {

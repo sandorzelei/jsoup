@@ -157,7 +157,11 @@ public class Parser {
      * @return parsed Document
      */
     public static Document parse(String html, String baseUri) {
-        TreeBuilder treeBuilder = new HtmlTreeBuilder();
+        return parse(html, baseUri, true);
+    }
+
+    public static Document parse(String html, String baseUri, boolean removeFirstNewLine) {
+        TreeBuilder treeBuilder = new HtmlTreeBuilder(removeFirstNewLine);
         return treeBuilder.parse(new StringReader(html), baseUri, new Parser(treeBuilder));
     }
 

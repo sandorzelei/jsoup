@@ -587,7 +587,9 @@ enum HtmlTreeBuilderState {
                         tb.processEndTag("p");
                     }
                     tb.insert(startTag);
-                    // tb.reader.matchConsume("\n"); // ignore LF if next token
+                    if (tb.isRemoveFirstNewLine()) {
+                       tb.reader.matchConsume("\n"); // ignore LF if next token 
+                    }
                     tb.framesetOk(false);
                     break;
                 // static final String[] DdDt = new String[]{"dd", "dt"};

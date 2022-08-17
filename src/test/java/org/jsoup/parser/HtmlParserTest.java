@@ -1236,15 +1236,22 @@ public class HtmlParserTest {
         assertTrue(doc.childNode(0) instanceof Comment);
     }
 
+    @Test public void preSkipsFirstNewline() {
+        Document doc = Jsoup.parse("<pre>\n\nOne\nTwo\n</pre>");
+        Element pre = doc.selectFirst("pre");
+        assertEquals("One\nTwo", pre.text());
+        assertEquals("\nOne\nTwo\n", pre.wholeText());
+    }
+
     @Test public void preKeepFirstNewline() {
-        Document doc = Jsoup.parse("<pre>\nOne\nTwo\n</pre>");
+        Document doc = Jsoup.parse("<pre>\nOne\nTwo\n</pre>", false);
         Element pre = doc.selectFirst("pre");
         assertEquals("One\nTwo", pre.text());
         assertEquals("\nOne\nTwo\n", pre.wholeText());
     }
 
     @Test public void preKeepFirstNewlineWhenDouble() {
-        Document doc = Jsoup.parse("<pre>\n\nOne\nTwo\n</pre>");
+        Document doc = Jsoup.parse("<pre>\n\nOne\nTwo\n</pre>", false);
         Element pre = doc.selectFirst("pre");
         assertEquals("One\nTwo", pre.text());
         assertEquals("\n\nOne\nTwo\n", pre.wholeText());

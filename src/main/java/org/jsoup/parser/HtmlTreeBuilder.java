@@ -60,6 +60,16 @@ public class HtmlTreeBuilder extends TreeBuilder {
     private boolean fosterInserts; // if next inserts should be fostered
     private boolean fragmentParsing; // if parsing a fragment of html
 
+    private boolean removeFirstNewLine;
+
+    public HtmlTreeBuilder() {
+        this(true);
+    }
+
+    public HtmlTreeBuilder(boolean removeFirstNewLine) {
+        this.removeFirstNewLine = removeFirstNewLine;
+    }
+
     ParseSettings defaultSettings() {
         return ParseSettings.htmlDefault;
     }
@@ -898,6 +908,10 @@ public class HtmlTreeBuilder extends TreeBuilder {
 
     @Nullable HtmlTreeBuilderState currentTemplateMode() {
         return (tmplInsertMode.size() > 0) ? tmplInsertMode.get(tmplInsertMode.size() -1)  : null;
+    }
+
+    boolean isRemoveFirstNewLine() {
+        return this.removeFirstNewLine;
     }
 
     @Override

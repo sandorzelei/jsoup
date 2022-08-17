@@ -32,7 +32,11 @@ public class Jsoup {
      @return sane HTML
      */
     public static Document parse(String html, String baseUri) {
-        return Parser.parse(html, baseUri);
+        return parse(html, baseUri, true);
+    }
+
+    public static Document parse(String html, String baseUri, boolean removeFirstNewLine) {
+        return Parser.parse(html, baseUri, removeFirstNewLine);
     }
 
     /**
@@ -74,6 +78,10 @@ public class Jsoup {
      */
     public static Document parse(String html) {
         return Parser.parse(html, "");
+    }
+
+    public static Document parse(String html, boolean removeFirstNewLine) {
+        return Parser.parse(html, "", removeFirstNewLine);
     }
 
     /**

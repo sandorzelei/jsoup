@@ -7,14 +7,15 @@ import org.jsoup.internal.StringUtil;
 import org.jsoup.nodes.*;
 import org.jsoup.safety.Safelist;
 import org.jsoup.select.Elements;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.jsoup.parser.ParseSettings.preserveCase;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -1236,25 +1237,31 @@ public class HtmlParserTest {
         assertTrue(doc.childNode(0) instanceof Comment);
     }
 
-    @Test public void preSkipsFirstNewline() {
-        Document doc = Jsoup.parse("<pre>\n\nOne\nTwo\n</pre>");
-        Element pre = doc.selectFirst("pre");
-        assertEquals("One\nTwo", pre.text());
-        assertEquals("\nOne\nTwo\n", pre.wholeText());
+    @Test public void preSkipsFirstNewline() throws IOException {
+        try (InputStream inputStream = new ByteArrayInputStream("<pre>\n\nOne\nTwo\n</pre>".getBytes(UTF_8))) {
+            Document doc = Jsoup.parse(inputStream, UTF_8.name(), "", true);
+            Element pre = doc.selectFirst("pre");
+            assertEquals("One\nTwo", pre.text());
+            assertEquals("\nOne\nTwo\n", pre.wholeText());
+        }
     }
 
-    @Test public void preKeepFirstNewline() {
-        Document doc = Jsoup.parse("<pre>\nOne\nTwo\n</pre>", false);
-        Element pre = doc.selectFirst("pre");
-        assertEquals("One\nTwo", pre.text());
-        assertEquals("\nOne\nTwo\n", pre.wholeText());
+    @Test public void preKeepFirstNewline() throws IOException {
+        try (InputStream inputStream = new ByteArrayInputStream("<pre>\nOne\nTwo\n</pre>".getBytes(UTF_8))) {
+            Document doc = Jsoup.parse(inputStream, UTF_8.name(), "", false);
+            Element pre = doc.selectFirst("pre");
+            assertEquals("One\nTwo", pre.text());
+            assertEquals("\nOne\nTwo\n", pre.wholeText());
+        }
     }
 
-    @Test public void preKeepFirstNewlineWhenDouble() {
-        Document doc = Jsoup.parse("<pre>\n\nOne\nTwo\n</pre>", false);
-        Element pre = doc.selectFirst("pre");
-        assertEquals("One\nTwo", pre.text());
-        assertEquals("\n\nOne\nTwo\n", pre.wholeText());
+    @Test public void preKeepFirstNewlineWhenDouble() throws IOException {
+        try (InputStream inputStream = new ByteArrayInputStream("<pre>\n\nOne\nTwo\n</pre>".getBytes(UTF_8))) {
+            Document doc = Jsoup.parse(inputStream, UTF_8.name(), "", false);
+            Element pre = doc.selectFirst("pre");
+            assertEquals("One\nTwo", pre.text());
+            assertEquals("\n\nOne\nTwo\n", pre.wholeText());
+        }
     }
 
     @Test public void handlesXmlDeclAndCommentsBeforeDoctype() throws IOException {

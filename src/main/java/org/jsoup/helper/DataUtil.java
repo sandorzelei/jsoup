@@ -110,6 +110,19 @@ public final class DataUtil {
     }
 
     /**
+     * Parses a Document from an input steam.
+     * @param in input stream to parse. The stream will be closed after reading.
+     * @param charsetName character set of input (optional)
+     * @param baseUri base URI of document, to resolve relative links against
+     * @param removeFirstNewLine flag to remove/keep the first linebreak
+     * @return Document
+     * @throws IOException on IO error
+     */
+    public static Document load(@WillClose InputStream in, @Nullable String charsetName, String baseUri, boolean removeFirstNewLine) throws IOException {
+        return parseInputStream(in, charsetName, baseUri, Parser.htmlParser(removeFirstNewLine));
+    }
+
+    /**
      * Parses a Document from an input steam, using the provided Parser.
      * @param in input stream to parse. The stream will be closed after reading.
      * @param charsetName character set of input (optional)

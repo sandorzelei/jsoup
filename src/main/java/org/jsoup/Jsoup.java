@@ -1,5 +1,7 @@
 package org.jsoup;
 
+import static org.jsoup.parser.HtmlTreeBuilder.DEFAULT_REMOVE_FIRST_NEW_LINE;
+
 import org.jsoup.helper.DataUtil;
 import org.jsoup.helper.HttpConnection;
 import org.jsoup.nodes.Document;
@@ -32,11 +34,7 @@ public class Jsoup {
      @return sane HTML
      */
     public static Document parse(String html, String baseUri) {
-        return parse(html, baseUri, true);
-    }
-
-    public static Document parse(String html, String baseUri, boolean removeFirstNewLine) {
-        return Parser.parse(html, baseUri, removeFirstNewLine);
+        return Parser.parse(html, baseUri);
     }
 
     /**
@@ -78,10 +76,6 @@ public class Jsoup {
      */
     public static Document parse(String html) {
         return Parser.parse(html, "");
-    }
-
-    public static Document parse(String html, boolean removeFirstNewLine) {
-        return Parser.parse(html, "", removeFirstNewLine);
     }
 
     /**
@@ -204,7 +198,11 @@ Connection con3 = session.newRequest();
      @throws IOException if the file could not be found, or read, or if the charsetName is invalid.
      */
     public static Document parse(@WillClose InputStream in, @Nullable String charsetName, String baseUri) throws IOException {
-        return DataUtil.load(in, charsetName, baseUri);
+        return parse(in, charsetName, baseUri, DEFAULT_REMOVE_FIRST_NEW_LINE);
+    }
+
+    public static Document parse(@WillClose InputStream in, @Nullable String charsetName, String baseUri, boolean removeFirstNewLine) throws IOException {
+        return DataUtil.load(in, charsetName, baseUri, removeFirstNewLine);
     }
 
     /**

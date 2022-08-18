@@ -37,6 +37,10 @@ public class Jsoup {
         return Parser.parse(html, baseUri);
     }
 
+    public static Document parse(String html, String baseUri, boolean removeFirstNewLine) {
+        return Parser.parse(html, baseUri, removeFirstNewLine);
+    }
+
     /**
      Parse HTML into a Document, using the provided Parser. You can provide an alternate parser, such as a simple XML
      (non-HTML) parser.
@@ -76,6 +80,10 @@ public class Jsoup {
      */
     public static Document parse(String html) {
         return Parser.parse(html, "");
+    }
+
+    public static Document parse(String html, boolean removeFirstNewLine) {
+        return Parser.parse(html, "", removeFirstNewLine);
     }
 
     /**

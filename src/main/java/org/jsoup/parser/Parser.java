@@ -163,6 +163,11 @@ public class Parser {
         return treeBuilder.parse(new StringReader(html), baseUri, new Parser(treeBuilder));
     }
 
+    public static Document parse(String html, String baseUri, boolean removeFirstNewLine) {
+        TreeBuilder treeBuilder = new HtmlTreeBuilder(removeFirstNewLine);
+        return treeBuilder.parse(new StringReader(html), baseUri, new Parser(treeBuilder));
+    }
+
     /**
      * Parse a fragment of HTML into a list of nodes. The context element, if supplied, supplies parsing context.
      *
